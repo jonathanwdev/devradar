@@ -1,9 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const http = require('http');
+
 const routes = require('./routes');
+const { setUpWebSocket } = require('./websocket');;
+
 
 const app = express();
+const server = http.Server(app);
+setUpWebSocket(server);
 
 
 mongoose.connect('mongodb+srv://root:root@cluster0-quzgd.mongodb.net/week10?retryWrites=true&w=majority',{
@@ -15,4 +21,4 @@ app.use(cors());
 app.use(express.json());
 app.use(routes);
 
-app.listen(3333);
+server.listen(3333);
